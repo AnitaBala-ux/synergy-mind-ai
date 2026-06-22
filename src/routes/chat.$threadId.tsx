@@ -16,6 +16,9 @@ export const Route = createFileRoute("/chat/$threadId")({
     meta: [
       { title: "AI Assistant — ResearchFlow AI" },
       { name: "description", content: "Conversational AI assistant for research, writing, and productivity." },
+      { property: "og:title", content: "AI Assistant — ResearchFlow AI" },
+      { property: "og:description", content: "Multi-thread AI chat for research, writing, and productivity." },
+      { name: "robots", content: "noindex" },
     ],
   }),
   component: ChatPage,

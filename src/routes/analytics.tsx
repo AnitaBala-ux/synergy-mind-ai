@@ -13,8 +13,12 @@ export const Route = createFileRoute("/analytics")({
   head: () => ({
     meta: [
       { title: "Analytics — ResearchFlow AI" },
-      { name: "description", content: "Productivity score, focus time, streaks, and weekly trends." },
+      { name: "description", content: "Track your productivity score, focus time, active-day streaks, and weekly trends across tasks and research sessions." },
+      { property: "og:title", content: "Productivity Analytics — ResearchFlow AI" },
+      { property: "og:description", content: "Productivity score, focus time, streaks, and weekly trends." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/analytics" },
     ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/analytics" }],
   }),
   component: Analytics,
 });

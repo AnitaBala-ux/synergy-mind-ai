@@ -6,7 +6,16 @@ import { getClientId } from "@/lib/client-id";
 import { FolderKanban, Plus, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/projects")({
-  head: () => ({ meta: [{ title: "Projects — ResearchFlow AI" }] }),
+  head: () => ({
+    meta: [
+      { title: "Projects — ResearchFlow AI" },
+      { name: "description", content: "Organize your research and work into color-coded projects, keep deliverables grouped, and track progress across your AI-assisted workflow." },
+      { property: "og:title", content: "Projects — ResearchFlow AI" },
+      { property: "og:description", content: "Organize research and work into color-coded projects in your ResearchFlow AI workspace." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/projects" },
+    ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/projects" }],
+  }),
   component: Projects,
 });
 
@@ -45,7 +54,7 @@ function Projects() {
       <main className="flex-1 overflow-y-auto p-6 lg:p-8">
         <div className="max-w-5xl mx-auto space-y-6">
           <section className="rounded-xl border border-border bg-card p-5">
-            <h3 className="font-semibold mb-3">Create Project</h3>
+            <h2 className="font-semibold mb-3">Create Project</h2>
             <div className="grid md:grid-cols-[1fr_1fr_auto] gap-3">
               <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Project name"
                 className="px-3 py-2 rounded-md border border-border bg-background text-sm" />
@@ -78,8 +87,8 @@ function Projects() {
                     <div className="font-semibold">{p.name}</div>
                     {p.description && <p className="text-xs text-muted-foreground mt-0.5">{p.description}</p>}
                   </div>
-                  <button onClick={() => remove(p.id)} className="opacity-0 group-hover:opacity-100 p-1 text-muted-foreground hover:text-destructive">
-                    <Trash2 className="size-4" />
+                  <button onClick={() => remove(p.id)} aria-label="Delete project" className="opacity-0 group-hover:opacity-100 p-1 text-muted-foreground hover:text-destructive">
+                    <Trash2 className="size-4" aria-hidden="true" />
                   </button>
                 </div>
               </div>

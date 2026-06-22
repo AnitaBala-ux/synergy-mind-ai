@@ -4,7 +4,17 @@ import { getClientId } from "@/lib/client-id";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/settings")({
-  head: () => ({ meta: [{ title: "Settings — ResearchFlow AI" }] }),
+  head: () => ({
+    meta: [
+      { title: "Settings — ResearchFlow AI" },
+      { name: "description", content: "Manage your ResearchFlow AI workspace preferences, view your local workspace ID, and learn how your data is stored in your browser." },
+      { property: "og:title", content: "Settings — ResearchFlow AI" },
+      { property: "og:description", content: "Manage your ResearchFlow AI workspace preferences." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/settings" },
+      { name: "robots", content: "noindex" },
+    ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/settings" }],
+  }),
   component: Settings,
 });
 

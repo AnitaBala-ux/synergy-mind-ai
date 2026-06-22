@@ -16,9 +16,13 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dashboard — ResearchFlow AI" },
-      { name: "description", content: "Your AI productivity dashboard: tasks, research, deadlines, and insights." },
+      { title: "ResearchFlow AI — Smart AI Research & Planning" },
+      { name: "description", content: "Your unified AI workspace for academic research, planning, smart to-dos, and productivity analytics — all in one dashboard." },
+      { property: "og:title", content: "ResearchFlow AI — Research Smarter. Plan Better. Achieve More." },
+      { property: "og:description", content: "AI research, planning, and productivity in one unified workspace." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/" }],
   }),
   component: Dashboard,
 });
@@ -74,7 +78,7 @@ function Dashboard() {
 
   return (
     <>
-      <TopBar title="Dashboard" />
+      <TopBar title="Research Smarter. Plan Better. Achieve More." />
       <main className="p-6 lg:p-8 space-y-8 overflow-y-auto">
         {/* Hero */}
         <section className="rounded-2xl p-8 bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-elegant">
