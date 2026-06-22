@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      focus_sessions: {
+        Row: {
+          client_id: string
+          created_at: string
+          duration_seconds: number
+          ended_at: string
+          id: string
+          note: string | null
+          source: string
+          started_at: string
+          task_id: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          duration_seconds?: number
+          ended_at?: string
+          id?: string
+          note?: string | null
+          source?: string
+          started_at?: string
+          task_id?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          duration_seconds?: number
+          ended_at?: string
+          id?: string
+          note?: string | null
+          source?: string
+          started_at?: string
+          task_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "focus_sessions_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           created_at: string

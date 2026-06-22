@@ -5,8 +5,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { runPlanner } from "@/lib/ai.functions";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { CalendarClock, Copy, Loader2 } from "lucide-react";
+import { CalendarClock, Copy, FileText, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { exportMarkdownToPDF } from "@/lib/pdf-export";
 
 export const Route = createFileRoute("/planner")({
   head: () => ({
@@ -86,8 +87,18 @@ function Planner() {
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold">Your Weekly Plan</h3>
               {output && (
-                <button onClick={() => { navigator.clipboard.writeText(output); toast.success("Copied"); }}
-                  className="p-2 rounded-md hover:bg-muted"><Copy className="size-4" /></button>
+                <div className="flex gap-1">
+                  <button onClick={() => { navigator.clipboard.writeText(output); toast.success("Copied"); }}
+                    className="p-2 rounded-md hover:bg-muted" aria-label="Copy"><Copy className="size-4" /></button>
+                  <button
+                    onClick={() => exportMarkdownToPDF(output, {
+                      title: "Weekly Plan",
+                      subtitle: `Generated · ${hoursPerDay} hrs/day · ${priority} priority`,
+                      module: "Task Planner",
+                      filename: `weekly-plan-${Date.now()}`,
+                    })}
+                    className="p-2 rounded-md hover:bg-muted" aria-label="Export PDF"><FileText className="size-4" /></button>
+                </div>
               )}
             </div>
             {!output && !loading && (

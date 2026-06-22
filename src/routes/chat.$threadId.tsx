@@ -7,8 +7,9 @@ import remarkGfm from "remark-gfm";
 import { TopBar } from "@/components/top-bar";
 import { supabase } from "@/integrations/supabase/client";
 import { getClientId } from "@/lib/client-id";
-import { MessageSquarePlus, Send, Loader2, Trash2, Bot, User } from "lucide-react";
+import { MessageSquarePlus, Send, Loader2, Trash2, Bot, User, FileText } from "lucide-react";
 import { toast } from "sonner";
+import { exportMarkdownToPDF } from "@/lib/pdf-export";
 
 export const Route = createFileRoute("/chat/$threadId")({
   head: () => ({
@@ -165,6 +166,27 @@ function ChatPage() {
 
         {/* Conversation */}
         <div className="flex-1 flex flex-col min-w-0">
+          <div className="px-4 lg:px-8 pt-3 flex justify-end">
+            <button
+              onClick={() => {
+                if (messages.length === 0) { toast.error("No messages to export"); return; }
+                const md = messages.map((m) => {
+                  const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
+                  return `## ${m.role === "user" ? "You" : "ResearchFlow AI"}\n\n${text}`;
+                }).join("\n\n---\n\n");
+                const current = threads.find((t) => t.id === threadId);
+                exportMarkdownToPDF(md, {
+                  title: current?.title || "AI Conversation",
+                  subtitle: `${messages.length} messages`,
+                  module: "AI Assistant",
+                  filename: `chat-${Date.now()}`,
+                });
+              }}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-border text-xs hover:bg-muted"
+            >
+              <FileText className="size-3.5" /> Export PDF
+            </button>
+          </div>
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 lg:px-8 py-6">
             <div className="max-w-3xl mx-auto space-y-6">
               {messages.length === 0 && (
