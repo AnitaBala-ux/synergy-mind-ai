@@ -11,7 +11,11 @@ export const Route = createFileRoute("/todo")({
     meta: [
       { title: "To-Do List — ResearchFlow AI" },
       { name: "description", content: "Smart to-do list with priorities, categories, deadlines, and a built-in focus timer." },
+      { property: "og:title", content: "Smart To-Do List — ResearchFlow AI" },
+      { property: "og:description", content: "Prioritized tasks, deadlines, and a built-in Pomodoro focus timer." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/todo" },
     ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/todo" }],
   }),
   component: Todo,
 });
