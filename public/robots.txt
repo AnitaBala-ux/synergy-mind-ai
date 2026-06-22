@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /chat/
+Disallow: /settings
+Disallow: /api/
+
+Sitemap: https://synergy-mind-ai.lovable.app/sitemap.xml

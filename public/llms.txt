@@ -1,0 +1,16 @@
+# ResearchFlow AI
+
+> AI-powered workspace combining a research assistant, chatbot, task planner, smart to-do list, and productivity analytics for students, researchers, and knowledge workers.
+
+ResearchFlow AI helps you summarize sources, generate citations (APA 7 and Harvard), plan your week, track focus time, and export branded PDF reports — all from one unified dashboard.
+
+## Pages
+
+- [Dashboard](/): Overview of tasks, research sessions, and productivity score.
+- [Research Assistant](/research): Summarize articles, analyze uploaded PDFs, and build citations.
+- [Task Planner](/planner): Turn goals and deadlines into an AI-optimized weekly schedule.
+- [Smart To-Do List](/todo): Prioritized tasks with categories, deadlines, and a Pomodoro focus timer.
+- [Projects](/projects): Organize work into color-coded projects.
+- [Productivity Analytics](/analytics): Productivity score, focus time, streaks, and weekly trends.
+- [Responsible AI](/responsible-ai): How ResearchFlow AI approaches accuracy, bias, privacy, and oversight.
+- [Citing AI in Academic Research](/guides/citing-ai): How to cite AI-generated content in APA, MLA, and Chicago.
