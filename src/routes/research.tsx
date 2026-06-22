@@ -275,17 +275,16 @@ function DocumentTab() {
     if (!file) return;
     setLoading(true); setOutput("");
     try {
-      const payload: Parameters<typeof analyze>[0]["data"] = {
+      const isPdf = file.type === "application/pdf";
+      const payload = {
         filename: file.name,
         mimeType: file.type || "application/octet-stream",
         instruction: instruction || undefined,
         template,
+        ...(isPdf
+          ? { base64: await fileToBase64(file) }
+          : { text: await file.text() }),
       };
-      if (file.type === "application/pdf") {
-        payload.base64 = await fileToBase64(file);
-      } else {
-        payload.text = await file.text();
-      }
       const { result } = await analyze({ data: payload });
       setOutput(result);
     } catch (e) {
