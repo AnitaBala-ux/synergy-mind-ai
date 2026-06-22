@@ -37,7 +37,7 @@ export const Route = createFileRoute("/api/chat")({
               const rows = (finalMessages as UIMessage[]).map((m) => ({
                 thread_id: threadId,
                 role: m.role,
-                parts: m.parts as unknown as object,
+                parts: JSON.parse(JSON.stringify(m.parts)),
               }));
               await supabaseAdmin.from("messages").delete().eq("thread_id", threadId);
               if (rows.length) await supabaseAdmin.from("messages").insert(rows);
