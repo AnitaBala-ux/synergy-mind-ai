@@ -1,16 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TopBar } from "@/components/top-bar";
 import { supabase } from "@/integrations/supabase/client";
 import { getClientId } from "@/lib/client-id";
-import { Plus, Trash2, Check, Circle, CircleDot } from "lucide-react";
+import { Plus, Trash2, Check, Circle, CircleDot, Play, Square, Timer } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/todo")({
   head: () => ({
     meta: [
       { title: "To-Do List — ResearchFlow AI" },
-      { name: "description", content: "Smart to-do list with priorities, categories, and deadlines." },
+      { name: "description", content: "Smart to-do list with priorities, categories, deadlines, and a built-in focus timer." },
     ],
   }),
   component: Todo,
@@ -40,6 +40,18 @@ function Todo() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", category: "work", priority: "medium", due_date: "" });
 
+  // Focus timer state (single active timer)
+  const [activeTimer, setActiveTimer] = useState<{ taskId: string; startedAt: number } | null>(null);
+  const [tick, setTick] = useState(0);
+  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (activeTimer) {
+      tickRef.current = setInterval(() => setTick((t) => t + 1), 1000);
+      return () => { if (tickRef.current) clearInterval(tickRef.current); };
+    }
+  }, [activeTimer]);
+
   const load = async () => {
     const cid = getClientId();
     const { data } = await supabase
@@ -65,14 +77,51 @@ function Todo() {
     load();
   };
 
+  const recordFocusSession = async (taskId: string | null, durationSeconds: number, source: "manual" | "auto") => {
+    if (durationSeconds < 5) return;
+    await supabase.from("focus_sessions").insert({
+      client_id: getClientId(),
+      task_id: taskId,
+      source,
+      duration_seconds: durationSeconds,
+      started_at: new Date(Date.now() - durationSeconds * 1000).toISOString(),
+      ended_at: new Date().toISOString(),
+    });
+  };
+
   const setStatus = async (id: string, status: string) => {
-    await supabase.from("tasks").update({ status, completed_at: status === "completed" ? new Date().toISOString() : null }).eq("id", id);
+    const prev = tasks.find((t) => t.id === id);
+    await supabase.from("tasks").update({
+      status,
+      completed_at: status === "completed" ? new Date().toISOString() : null,
+    }).eq("id", id);
+    // Auto focus session estimate when task completes (and no manual timer is/was active for it)
+    if (status === "completed" && prev?.status !== "completed" && activeTimer?.taskId !== id) {
+      const estimate = prev?.priority === "high" ? 45 * 60 : prev?.priority === "medium" ? 25 * 60 : 15 * 60;
+      await recordFocusSession(id, estimate, "auto");
+    }
     load();
   };
 
   const remove = async (id: string) => {
     await supabase.from("tasks").delete().eq("id", id);
+    if (activeTimer?.taskId === id) setActiveTimer(null);
     load();
+  };
+
+  const startTimer = (taskId: string) => {
+    if (activeTimer && activeTimer.taskId !== taskId) {
+      stopTimer(); // stop previous first
+    }
+    setActiveTimer({ taskId, startedAt: Date.now() });
+  };
+
+  const stopTimer = async () => {
+    if (!activeTimer) return;
+    const duration = Math.floor((Date.now() - activeTimer.startedAt) / 1000);
+    await recordFocusSession(activeTimer.taskId, duration, "manual");
+    setActiveTimer(null);
+    toast.success(`Logged ${formatDuration(duration)} of focus time`);
   };
 
   const filtered = filter === "all" ? tasks : tasks.filter((t) => t.status === filter || t.category === filter || t.priority === filter);
@@ -97,6 +146,25 @@ function Todo() {
               <Plus className="size-4" /> New Task
             </button>
           </div>
+
+          {activeTimer && (
+            <div className="mb-4 p-3 rounded-lg border border-primary/30 bg-primary/5 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm">
+                <Timer className="size-4 text-primary animate-pulse" />
+                <span className="font-medium">Focus session active</span>
+                <span className="text-muted-foreground">·</span>
+                <span className="font-mono tabular-nums">{formatDuration(Math.floor((Date.now() - activeTimer.startedAt) / 1000))}</span>
+                <span className="text-muted-foreground truncate max-w-xs">
+                  on "{tasks.find((t) => t.id === activeTimer.taskId)?.title}"
+                </span>
+                <span className="sr-only">{tick}</span>
+              </div>
+              <button onClick={stopTimer}
+                className="px-3 py-1.5 rounded-md bg-foreground text-background text-xs font-medium flex items-center gap-1.5">
+                <Square className="size-3.5" /> Stop & log
+              </button>
+            </div>
+          )}
 
           {showForm && (
             <div className="mb-5 p-5 rounded-xl border border-border bg-card space-y-3">
@@ -140,8 +208,9 @@ function Todo() {
             {filtered.map((t) => {
               const nextStatus = t.status === "not_started" ? "in_progress" : t.status === "in_progress" ? "completed" : "not_started";
               const StatusIcon = STATUSES.find((s) => s.id === t.status)?.icon ?? Circle;
+              const timerHere = activeTimer?.taskId === t.id;
               return (
-                <div key={t.id} className={`p-4 rounded-lg border border-border bg-card flex items-start gap-3 ${t.status === "completed" ? "opacity-60" : ""}`}>
+                <div key={t.id} className={`p-4 rounded-lg border ${timerHere ? "border-primary" : "border-border"} bg-card flex items-start gap-3 ${t.status === "completed" ? "opacity-60" : ""}`}>
                   <button onClick={() => setStatus(t.id, nextStatus)}
                     className={`mt-0.5 size-6 rounded-full grid place-items-center border ${t.status === "completed" ? "bg-primary border-primary text-primary-foreground" : "border-border hover:border-primary"}`}>
                     <StatusIcon className="size-3.5" />
@@ -155,6 +224,19 @@ function Todo() {
                       {t.due_date && <span className="text-muted-foreground">Due {new Date(t.due_date).toLocaleDateString()}</span>}
                     </div>
                   </div>
+                  {t.status !== "completed" && (
+                    timerHere ? (
+                      <button onClick={stopTimer}
+                        className="p-1.5 rounded-md text-primary hover:bg-primary/10" aria-label="Stop timer" title="Stop focus timer">
+                        <Square className="size-4" />
+                      </button>
+                    ) : (
+                      <button onClick={() => startTimer(t.id)}
+                        className="p-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-muted" aria-label="Start timer" title="Start focus timer">
+                        <Play className="size-4" />
+                      </button>
+                    )
+                  )}
                   <button onClick={() => remove(t.id)} className="p-1.5 text-muted-foreground hover:text-destructive">
                     <Trash2 className="size-4" />
                   </button>
@@ -166,4 +248,13 @@ function Todo() {
       </main>
     </>
   );
+}
+
+function formatDuration(seconds: number): string {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return h > 0
+    ? `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`
+    : `${m}:${String(s).padStart(2, "0")}`;
 }
