@@ -5,10 +5,10 @@ import { BookOpen, ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/guides/citing-ai")({
   head: () => ({
     meta: [
-      { title: "How to Cite AI in Academic Research (APA, MLA, Chicago)" },
-      { name: "description", content: "A practical guide to citing ChatGPT, Gemini, and other AI writing assistants in APA 7, MLA 9, and Chicago — with examples, in-text citations, and tips for academic integrity." },
-      { property: "og:title", content: "How to Cite AI in Academic Research" },
-      { property: "og:description", content: "Cite ChatGPT, Gemini, and AI writing assistants correctly in APA, MLA, and Chicago." },
+      { title: "How to Cite an AI Writing Assistant in Academic Research (APA, MLA, Chicago)" },
+      { name: "description", content: "A practical guide to citing ChatGPT, Gemini, Claude, and other AI writing assistants in APA 7, MLA 9, Chicago, and Harvard — with examples, in-text citations, and academic integrity tips." },
+      { property: "og:title", content: "How to Cite an AI Writing Assistant in Academic Research" },
+      { property: "og:description", content: "Cite ChatGPT, Gemini, Claude, and other AI writing assistants correctly in APA, MLA, Chicago, and Harvard." },
       { property: "og:type", content: "article" },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/guides/citing-ai" },
     ],
@@ -44,16 +44,19 @@ function CitingAIGuide() {
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary">
               <BookOpen className="size-3.5" /> Academic guide
             </div>
-            <h1 className="text-4xl font-bold tracking-tight">How to Cite AI in Academic Research</h1>
+            <h1 className="text-4xl font-bold tracking-tight">How to Cite an AI Writing Assistant in Academic Research</h1>
             <p className="text-muted-foreground text-lg">
-              A practical reference for citing ChatGPT, Gemini, Claude, and other AI writing assistants in APA 7, MLA 9, and Chicago — with worked examples and integrity tips.
+              A practical reference for citing ChatGPT, Gemini, Claude, and other AI writing assistants in APA 7, MLA 9, Chicago, and Harvard — with worked examples, in-text citations, and integrity tips.
             </p>
           </header>
 
           <section className="space-y-3">
-            <h2 className="text-2xl font-semibold">Why citing AI matters</h2>
+            <h2 className="text-2xl font-semibold">Why citing an AI writing assistant matters</h2>
             <p>
-              AI writing assistants are now routine tools for brainstorming, summarizing literature, and drafting prose. Most universities and journals require you to disclose AI use and cite any text that came from an AI model, the same way you would cite a quote from a book or interview. Failing to do so risks academic integrity violations even when the underlying ideas are your own.
+              AI writing assistants are now routine tools for brainstorming, summarizing literature, drafting prose, and polishing arguments. Most universities and journals require you to disclose AI use and cite any text that came from an AI model, the same way you would cite a quote from a book or interview. Failing to do so risks academic integrity violations even when the underlying ideas are your own.
+            </p>
+            <p>
+              This guide explains how to cite an AI writing assistant in four common reference styles: APA 7, MLA 9, Chicago, and Harvard.
             </p>
           </section>
 
