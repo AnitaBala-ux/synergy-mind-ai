@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodoRouteImport } from './routes/todo'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as ResearchRouteImport } from './routes/research'
@@ -18,12 +19,18 @@ import { Route as PlannerRouteImport } from './routes/planner'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat.index'
+import { Route as GuidesCitingAiRouteImport } from './routes/guides.citing-ai'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const TodoRoute = TodoRouteImport.update({
   id: '/todo',
   path: '/todo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -66,6 +73,11 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
   path: '/chat/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesCitingAiRoute = GuidesCitingAiRouteImport.update({
+  id: '/guides/citing-ai',
+  path: '/guides/citing-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
   id: '/chat/$threadId',
   path: '/chat/$threadId',
@@ -85,9 +97,11 @@ export interface FileRoutesByFullPath {
   '/research': typeof ResearchRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/todo': typeof TodoRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/guides/citing-ai': typeof GuidesCitingAiRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRoutesByTo {
@@ -98,9 +112,11 @@ export interface FileRoutesByTo {
   '/research': typeof ResearchRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/todo': typeof TodoRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/guides/citing-ai': typeof GuidesCitingAiRoute
   '/chat': typeof ChatIndexRoute
 }
 export interface FileRoutesById {
@@ -112,9 +128,11 @@ export interface FileRoutesById {
   '/research': typeof ResearchRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/todo': typeof TodoRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/guides/citing-ai': typeof GuidesCitingAiRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRouteTypes {
@@ -127,9 +145,11 @@ export interface FileRouteTypes {
     | '/research'
     | '/responsible-ai'
     | '/settings'
+    | '/sitemap.xml'
     | '/todo'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/guides/citing-ai'
     | '/chat/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -140,9 +160,11 @@ export interface FileRouteTypes {
     | '/research'
     | '/responsible-ai'
     | '/settings'
+    | '/sitemap.xml'
     | '/todo'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/guides/citing-ai'
     | '/chat'
   id:
     | '__root__'
@@ -153,9 +175,11 @@ export interface FileRouteTypes {
     | '/research'
     | '/responsible-ai'
     | '/settings'
+    | '/sitemap.xml'
     | '/todo'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/guides/citing-ai'
     | '/chat/'
   fileRoutesById: FileRoutesById
 }
@@ -167,9 +191,11 @@ export interface RootRouteChildren {
   ResearchRoute: typeof ResearchRoute
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   SettingsRoute: typeof SettingsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TodoRoute: typeof TodoRoute
   ApiChatRoute: typeof ApiChatRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
+  GuidesCitingAiRoute: typeof GuidesCitingAiRoute
   ChatIndexRoute: typeof ChatIndexRoute
 }
 
@@ -180,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/todo'
       fullPath: '/todo'
       preLoaderRoute: typeof TodoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -238,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/citing-ai': {
+      id: '/guides/citing-ai'
+      path: '/guides/citing-ai'
+      fullPath: '/guides/citing-ai'
+      preLoaderRoute: typeof GuidesCitingAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat/$threadId': {
       id: '/chat/$threadId'
       path: '/chat/$threadId'
@@ -263,9 +303,11 @@ const rootRouteChildren: RootRouteChildren = {
   ResearchRoute: ResearchRoute,
   ResponsibleAiRoute: ResponsibleAiRoute,
   SettingsRoute: SettingsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TodoRoute: TodoRoute,
   ApiChatRoute: ApiChatRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,
+  GuidesCitingAiRoute: GuidesCitingAiRoute,
   ChatIndexRoute: ChatIndexRoute,
 }
 export const routeTree = rootRouteImport
