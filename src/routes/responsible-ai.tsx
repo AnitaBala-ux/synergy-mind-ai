@@ -3,7 +3,16 @@ import { TopBar } from "@/components/top-bar";
 import { AlertTriangle, ShieldCheck, Scale, Eye, Users, Lock } from "lucide-react";
 
 export const Route = createFileRoute("/responsible-ai")({
-  head: () => ({ meta: [{ title: "Responsible AI — ResearchFlow AI" }] }),
+  head: () => ({
+    meta: [
+      { title: "Responsible AI — ResearchFlow AI" },
+      { name: "description", content: "How ResearchFlow AI approaches accuracy, bias, privacy, and human oversight. Read our commitments for using AI safely in academic and professional work." },
+      { property: "og:title", content: "Responsible AI — ResearchFlow AI" },
+      { property: "og:description", content: "Our commitments on accuracy, bias, privacy, and human oversight when using AI." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/responsible-ai" },
+    ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/responsible-ai" }],
+  }),
   component: ResponsibleAI,
 });
 

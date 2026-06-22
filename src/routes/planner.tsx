@@ -13,8 +13,12 @@ export const Route = createFileRoute("/planner")({
   head: () => ({
     meta: [
       { title: "Task Planner — ResearchFlow AI" },
-      { name: "description", content: "AI-powered weekly planner and scheduler." },
+      { name: "description", content: "Turn goals and deadlines into an AI-optimized weekly schedule. Balance research, deep work, and tasks across your week with smart priorities." },
+      { property: "og:title", content: "AI Task Planner — ResearchFlow AI" },
+      { property: "og:description", content: "Generate an AI-optimized weekly schedule from your goals and deadlines." },
+      { property: "og:url", content: "https://synergy-mind-ai.lovable.app/planner" },
     ],
+    links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/planner" }],
   }),
   component: Planner,
 });

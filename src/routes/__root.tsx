@@ -50,17 +50,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ResearchFlow AI — Research Smarter. Plan Better. Achieve More." },
+      { title: "ResearchFlow AI — Smart AI Research & Planning" },
       { name: "description", content: "AI-powered workspace for research, planning, tasks, and knowledge work." },
-      { property: "og:title", content: "ResearchFlow AI" },
-      { property: "og:description", content: "Research Smarter. Plan Better. Achieve More." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "ResearchFlow AI" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "ResearchFlow AI",
+              url: "https://synergy-mind-ai.lovable.app",
+              description: "AI-powered workspace for research, planning, tasks, and knowledge work.",
+            },
+            {
+              "@type": "WebSite",
+              name: "ResearchFlow AI",
+              url: "https://synergy-mind-ai.lovable.app",
+            },
+          ],
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
