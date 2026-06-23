@@ -2,8 +2,17 @@ import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { z } from "zod";
 
-type ChatRequestBody = { messages?: unknown; threadId?: unknown };
+const BodySchema = z.object({
+  messages: z
+    .array(z.object({ role: z.string().min(1).max(32), parts: z.array(z.unknown()).max(200) }).passthrough())
+    .min(1)
+    .max(200),
+  threadId: z.string().uuid().optional(),
+});
+
+
 
 const SYSTEM_PROMPT = `You are ResearchFlow AI, an expert research and productivity assistant.
 You help users with research synthesis, summaries, planning, writing, brainstorming, and task management.
@@ -15,10 +24,12 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages, threadId } = (await request.json()) as ChatRequestBody;
-        if (!Array.isArray(messages)) {
-          return new Response("Messages required", { status: 400 });
+        const raw = await request.json().catch(() => null);
+        const parsed = BodySchema.safeParse(raw);
+        if (!parsed.success) {
+          return new Response("Invalid request body", { status: 400 });
         }
+        const { messages, threadId } = parsed.data;
         const key = process.env.LOVABLE_API_KEY;
         if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
 
@@ -26,11 +37,11 @@ export const Route = createFileRoute("/api/chat")({
         const result = streamText({
           model: gateway("google/gemini-3-flash-preview"),
           system: SYSTEM_PROMPT,
-          messages: await convertToModelMessages(messages as UIMessage[]),
+          messages: await convertToModelMessages(messages as unknown as UIMessage[]),
         });
 
         return result.toUIMessageStreamResponse({
-          originalMessages: messages as UIMessage[],
+          originalMessages: messages as unknown as UIMessage[],
           onFinish: async ({ messages: finalMessages }) => {
             if (typeof threadId !== "string") return;
             try {
