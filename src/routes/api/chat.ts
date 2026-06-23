@@ -2,8 +2,17 @@ import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { z } from "zod";
 
-type ChatRequestBody = { messages?: unknown; threadId?: unknown };
+const BodySchema = z.object({
+  messages: z
+    .array(z.object({ role: z.string().min(1).max(32), parts: z.array(z.unknown()).max(200) }).passthrough())
+    .min(1)
+    .max(200),
+  threadId: z.string().uuid().optional(),
+});
+
+
 
 const SYSTEM_PROMPT = `You are ResearchFlow AI, an expert research and productivity assistant.
 You help users with research synthesis, summaries, planning, writing, brainstorming, and task management.
