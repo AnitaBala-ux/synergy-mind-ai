@@ -14,9 +14,24 @@ import {
 } from "lucide-react";
 
 export function AppSidebar() {
+  const { t } = useTranslation();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) =>
     to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(to + "/");
+
+  const items = [
+    { to: "/", label: t("nav.dashboard"), icon: LayoutDashboard },
+    { to: "/chat", label: t("nav.assistant"), icon: Bot },
+    { to: "/research", label: t("nav.research"), icon: BookOpen },
+    { to: "/planner", label: t("nav.planner"), icon: CalendarClock },
+    { to: "/todo", label: t("nav.todo"), icon: CheckSquare },
+    { to: "/analytics", label: t("nav.analytics"), icon: BarChart3 },
+    { to: "/projects", label: t("nav.projects"), icon: FolderKanban },
+  ];
+  const bottom = [
+    { to: "/settings", label: t("nav.settings"), icon: Settings },
+    { to: "/responsible-ai", label: t("nav.responsible"), icon: ShieldCheck },
+  ];
 
   return (
     <aside className="hidden md:flex w-60 shrink-0 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
@@ -26,7 +41,7 @@ export function AppSidebar() {
         </div>
         <div>
           <div className="font-semibold text-sm leading-tight">SynergyMind AI</div>
-          <div className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">AI Workspace</div>
+          <div className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">{t("common.workspace")}</div>
         </div>
       </div>
 
