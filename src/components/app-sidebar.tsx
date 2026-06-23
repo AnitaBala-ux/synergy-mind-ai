@@ -1,4 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import {
   LayoutDashboard,
   Bot,
@@ -11,21 +12,6 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
-
-const items = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/chat", label: "AI Assistant", icon: Bot },
-  { to: "/research", label: "Research", icon: BookOpen },
-  { to: "/planner", label: "Task Planner", icon: CalendarClock },
-  { to: "/todo", label: "To-Do List", icon: CheckSquare },
-  { to: "/analytics", label: "Analytics", icon: BarChart3 },
-  { to: "/projects", label: "Projects", icon: FolderKanban },
-];
-
-const bottom = [
-  { to: "/settings", label: "Settings", icon: Settings },
-  { to: "/responsible-ai", label: "Responsible AI", icon: ShieldCheck },
-];
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
