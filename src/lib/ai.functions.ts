@@ -57,8 +57,8 @@ const DocInput = z.object({
   filename: z.string().min(1).max(200),
   mimeType: z.string().min(1).max(120),
   // base64-encoded file content (PDF) OR plain extracted text
-  base64: z.string().optional(),
-  text: z.string().optional(),
+  base64: z.string().max(7_340_032).optional(), // ~5 MB base64-encoded
+  text: z.string().max(120_000).optional(),
   instruction: z.string().max(2000).optional(),
   template: z.enum(["summary", "academic", "literature"]).default("summary"),
 }).refine((v) => !!v.base64 || !!v.text, { message: "Provide base64 or text" });
