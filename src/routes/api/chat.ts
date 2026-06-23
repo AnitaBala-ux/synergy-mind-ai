@@ -37,11 +37,11 @@ export const Route = createFileRoute("/api/chat")({
         const result = streamText({
           model: gateway("google/gemini-3-flash-preview"),
           system: SYSTEM_PROMPT,
-          messages: await convertToModelMessages(messages as UIMessage[]),
+          messages: await convertToModelMessages(messages as unknown as UIMessage[]),
         });
 
         return result.toUIMessageStreamResponse({
-          originalMessages: messages as UIMessage[],
+          originalMessages: messages as unknown as UIMessage[],
           onFinish: async ({ messages: finalMessages }) => {
             if (typeof threadId !== "string") return;
             try {
