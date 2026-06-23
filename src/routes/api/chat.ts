@@ -24,10 +24,12 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages, threadId } = (await request.json()) as ChatRequestBody;
-        if (!Array.isArray(messages)) {
-          return new Response("Messages required", { status: 400 });
+        const raw = await request.json().catch(() => null);
+        const parsed = BodySchema.safeParse(raw);
+        if (!parsed.success) {
+          return new Response("Invalid request body", { status: 400 });
         }
+        const { messages, threadId } = parsed.data;
         const key = process.env.LOVABLE_API_KEY;
         if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
 
