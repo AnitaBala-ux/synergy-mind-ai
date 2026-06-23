@@ -78,7 +78,7 @@ function Dashboard() {
 
   return (
     <>
-      <TopBar title="Research Smarter. Plan Better. Achieve More." />
+      <TopBar title="\n" />
       <main className="p-6 lg:p-8 space-y-8 overflow-y-auto">
         {/* Hero */}
         <section className="rounded-2xl p-8 bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-elegant">

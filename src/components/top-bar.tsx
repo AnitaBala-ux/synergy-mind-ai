@@ -17,7 +17,7 @@ export function TopBar({ title }: { title: string }) {
           <Bell className="size-4" aria-hidden="true" />
         </button>
         <div className="size-9 rounded-full bg-gradient-to-br from-primary to-accent grid place-items-center text-primary-foreground text-sm font-semibold">
-          R
+          SM
         </div>
       </div>
     </header>
