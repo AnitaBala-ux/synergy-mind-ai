@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { TopBar } from "@/components/top-bar";
 import { AlertTriangle, ShieldCheck, Scale, Eye, Users, Lock } from "lucide-react";
 
 export const Route = createFileRoute("/responsible-ai")({
   head: () => ({
     meta: [
-      { title: "Responsible AI — ResearchFlow AI" },
-      { name: "description", content: "How ResearchFlow AI approaches accuracy, bias, privacy, and human oversight. Read our commitments for using AI safely in academic and professional work." },
-      { property: "og:title", content: "Responsible AI — ResearchFlow AI" },
+      { title: "Responsible AI — SynergyMind AI" },
+      { name: "description", content: "How SynergyMind AI approaches accuracy, bias, privacy, and human oversight. Read our commitments for using AI safely in academic and professional work." },
+      { property: "og:title", content: "Responsible AI — SynergyMind AI" },
       { property: "og:description", content: "Our commitments on accuracy, bias, privacy, and human oversight when using AI." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/responsible-ai" },
     ],
@@ -16,29 +17,29 @@ export const Route = createFileRoute("/responsible-ai")({
   component: ResponsibleAI,
 });
 
-const sections = [
-  { icon: AlertTriangle, title: "AI Limitations", body: "AI models can produce incorrect, outdated, or hallucinated information. Always verify outputs against authoritative sources before academic, professional, legal, medical, or financial use." },
-  { icon: Scale, title: "Bias Awareness", body: "Large language models reflect biases present in their training data. Critically evaluate outputs that involve people, cultures, demographics, or contested topics." },
-  { icon: Lock, title: "Data Privacy", body: "Do not paste personally identifiable, confidential, medical, or otherwise sensitive information into AI prompts. Treat the assistant as a public-facing system." },
-  { icon: Eye, title: "Human Verification", body: "AI assists — it does not replace expert judgement. A qualified human must review and approve any decision, recommendation, or content produced." },
-  { icon: Users, title: "Ethical Use", body: "Do not use ResearchFlow AI to deceive, plagiarize, harass, surveil, generate harmful content, or violate institutional policies or laws." },
-  { icon: ShieldCheck, title: "Maintained by App Owner", body: "This page is maintained by the app owner to summarize current Responsible AI commitments and is not a certification or independent verification." },
-];
-
 function ResponsibleAI() {
+  const { t } = useTranslation();
+
+  const sections = [
+    { icon: AlertTriangle, title: t("responsible.limitsTitle"), body: t("responsible.limitsBody") },
+    { icon: Scale, title: t("responsible.biasTitle"), body: t("responsible.biasBody") },
+    { icon: Lock, title: t("responsible.privacyTitle"), body: t("responsible.privacyBody") },
+    { icon: Eye, title: t("responsible.verifyTitle"), body: t("responsible.verifyBody") },
+    { icon: Users, title: t("responsible.ethicsTitle"), body: t("responsible.ethicsBody") },
+    { icon: ShieldCheck, title: t("responsible.ownerTitle"), body: t("responsible.ownerBody") },
+  ];
+
   return (
     <>
-      <TopBar title="Responsible AI" />
+      <TopBar title={t("responsible.title")} />
       <main className="flex-1 overflow-y-auto p-6 lg:p-8">
         <div className="max-w-4xl mx-auto space-y-6">
           <section className="rounded-xl p-6 border border-amber-500/30 bg-amber-500/10">
             <div className="flex gap-3 items-start">
               <AlertTriangle className="size-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
-                <h2 className="font-semibold">Important Notice</h2>
-                <p className="text-sm mt-1 text-foreground/90">
-                  This system provides AI-generated outputs intended to assist users. Responses may contain inaccuracies and should be independently verified before academic, professional, legal, medical, or financial use.
-                </p>
+                <h2 className="font-semibold">{t("responsible.noticeTitle")}</h2>
+                <p className="text-sm mt-1 text-foreground/90">{t("responsible.notice")}</p>
               </div>
             </div>
           </section>
