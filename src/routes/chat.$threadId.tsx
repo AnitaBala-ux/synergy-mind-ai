@@ -92,7 +92,7 @@ function ChatPage() {
     if (!text || isLoading) return;
     setInput("");
     // Update thread title if it's still "New Chat"
-    const current = threads.find((t) => t.id === threadId);
+    const current = threads.find((th) => th.id === threadId);
     if (current && current.title === "New Chat") {
       const newTitle = text.slice(0, 60);
       await supabase.from("threads").update({ title: newTitle }).eq("id", threadId);
@@ -117,7 +117,7 @@ function ChatPage() {
     await supabase.from("threads").delete().eq("id", id);
     await loadThreads();
     if (id === threadId) {
-      const remaining = threads.filter((t) => t.id !== id);
+      const remaining = threads.filter((th) => th.id !== id);
       if (remaining[0]) navigate({ to: "/chat/$threadId", params: { threadId: remaining[0].id } });
       else navigate({ to: "/chat" });
     }
@@ -148,17 +148,17 @@ function ChatPage() {
             {threads.length === 0 && (
               <p className="px-3 py-6 text-xs text-muted-foreground text-center">{t("chat.noConversations")}</p>
             )}
-            {threads.map((t) => (
-              <div key={t.id} className={`group flex items-center gap-1 rounded-md ${t.id === threadId ? "bg-muted" : "hover:bg-muted/60"}`}>
+            {threads.map((th) => (
+              <div key={th.id} className={`group flex items-center gap-1 rounded-md ${th.id === threadId ? "bg-muted" : "hover:bg-muted/60"}`}>
                 <Link
                   to="/chat/$threadId"
-                  params={{ threadId: t.id }}
+                  params={{ threadId: th.id }}
                   className="flex-1 px-3 py-2 text-sm truncate"
                 >
-                  {t.title}
+                  {th.title}
                 </Link>
                 <button
-                  onClick={(e) => { e.preventDefault(); deleteThread(t.id); }}
+                  onClick={(e) => { e.preventDefault(); deleteThread(th.id); }}
                   className="opacity-0 group-hover:opacity-100 p-1.5 mr-1 hover:text-destructive"
                   aria-label={t("chat.deleteChat")}
                 >
