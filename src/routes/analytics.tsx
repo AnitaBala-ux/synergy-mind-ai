@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TopBar } from "@/components/top-bar";
 import { supabase } from "@/integrations/supabase/client";
 import { getClientId } from "@/lib/client-id";
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/analytics")({
 type DayRow = { day: string; date: string; completed: number; created: number; focusMins: number };
 
 function Analytics() {
+  const { t } = useTranslation();
   const [days, setDays] = useState<DayRow[]>([]);
   const [totals, setTotals] = useState({
     completed: 0,
@@ -129,22 +131,22 @@ function Analytics() {
   }, []);
 
   const scoreBand = useMemo(() => {
-    if (totals.score >= 80) return { label: "Excellent", color: "text-emerald-600" };
-    if (totals.score >= 60) return { label: "Strong", color: "text-primary" };
-    if (totals.score >= 40) return { label: "Building", color: "text-amber-600" };
-    return { label: "Getting started", color: "text-muted-foreground" };
-  }, [totals.score]);
+    if (totals.score >= 80) return { label: t("analytics.bands.excellent"), color: "text-emerald-600" };
+    if (totals.score >= 60) return { label: t("analytics.bands.strong"), color: "text-primary" };
+    if (totals.score >= 40) return { label: t("analytics.bands.building"), color: "text-amber-600" };
+    return { label: t("analytics.bands.start"), color: "text-muted-foreground" };
+  }, [totals.score, t]);
 
   const cards = [
-    { label: "Tasks Completed (30d)", value: totals.completed, icon: Sparkles },
-    { label: "Research Sessions", value: totals.research, icon: TrendingUp },
-    { label: "Focus Hours (30d)", value: totals.focusHours, icon: Clock },
-    { label: "Active Day Streak", value: totals.streak, icon: Flame, suffix: totals.longestStreak ? `best ${totals.longestStreak}` : undefined },
+    { label: t("analytics.tasksCompleted"), value: totals.completed, icon: Sparkles },
+    { label: t("analytics.researchSessions"), value: totals.research, icon: TrendingUp },
+    { label: t("analytics.focusHours"), value: totals.focusHours, icon: Clock },
+    { label: t("analytics.activeStreak"), value: totals.streak, icon: Flame, suffix: totals.longestStreak ? t("analytics.best", { n: totals.longestStreak }) : undefined },
   ];
 
   return (
     <>
-      <TopBar title="Productivity Analytics" />
+      <TopBar title={t("analytics.title")} />
       <main className="flex-1 overflow-y-auto p-6 lg:p-8 space-y-6">
         {/* Productivity score hero */}
         <section className="rounded-2xl border border-border bg-card p-6 grid lg:grid-cols-[280px_1fr] gap-6 items-center">
@@ -166,15 +168,15 @@ function Analytics() {
             </div>
           </div>
           <div>
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">Weekly Productivity Score</div>
-            <h2 className="mt-1 text-xl font-semibold">Auto-calculated from your activity</h2>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground">{t("analytics.scoreLabel")}</div>
+            <h2 className="mt-1 text-xl font-semibold">{t("analytics.scoreHeading")}</h2>
             <p className="mt-2 text-sm text-muted-foreground max-w-lg">
-              Blends task completion rate, logged focus time, research sessions, and your active-day streak into a single score out of 100.
+              {t("analytics.scoreIntro")}
             </p>
             <div className="mt-4 grid grid-cols-3 gap-3 text-xs">
-              <ScoreBreak label="Completion" max={50} val={Math.min(50, Math.round(totals.score * 0.5))} />
-              <ScoreBreak label="Focus time" max={30} val={Math.min(30, Math.round(totals.score * 0.3))} />
-              <ScoreBreak label="Engagement" max={20} val={Math.min(20, Math.round(totals.score * 0.2))} />
+              <ScoreBreak label={t("analytics.completion")} max={50} val={Math.min(50, Math.round(totals.score * 0.5))} />
+              <ScoreBreak label={t("analytics.focusTime")} max={30} val={Math.min(30, Math.round(totals.score * 0.3))} />
+              <ScoreBreak label={t("analytics.engagement")} max={20} val={Math.min(20, Math.round(totals.score * 0.2))} />
             </div>
           </div>
         </section>
@@ -199,8 +201,8 @@ function Analytics() {
         {/* Charts */}
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-semibold mb-1">Weekly Task Activity</h3>
-            <p className="text-xs text-muted-foreground mb-4">Tasks created vs completed (last 7 days)</p>
+            <h3 className="font-semibold mb-1">{t("analytics.weeklyActivity")}</h3>
+            <p className="text-xs text-muted-foreground mb-4">{t("analytics.weeklyActivitySub")}</p>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={days}>
@@ -216,8 +218,8 @@ function Analytics() {
           </div>
 
           <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-semibold mb-1">Daily Focus Time</h3>
-            <p className="text-xs text-muted-foreground mb-4">Minutes of tracked focus per day</p>
+            <h3 className="font-semibold mb-1">{t("analytics.dailyFocus")}</h3>
+            <p className="text-xs text-muted-foreground mb-4">{t("analytics.dailyFocusSub")}</p>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={days}>
