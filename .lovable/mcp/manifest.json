@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://kofinzvgdbxzhhjfyjyu.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "synergymind-ai",
+      "version": "0.1.0",
+      "title": "SynergyMind AI"
+    },
+    "tools": [
+      {
+        "name": "research_analyze",
+        "title": "Run research analysis",
+        "description": "Run a structured SynergyMind AI research analysis on a topic, question, or pasted text and return a markdown report.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 3,
+              "description": "The research question, topic, or text to analyse."
+            },
+            "template": {
+              "default": "academic",
+              "description": "Analysis style to apply.",
+              "type": "string",
+              "enum": [
+                "academic",
+                "business",
+                "policy",
+                "literature",
+                "summary"
+              ]
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "format_citation",
+        "title": "Format a citation",
+        "description": "Turn a URL, DOI, or raw reference into a formatted citation in APA 7, MLA 9, Chicago, or Harvard style.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "reference": {
+              "type": "string",
+              "minLength": 5,
+              "description": "A URL, DOI, raw citation text, or description of the source."
+            },
+            "style": {
+              "default": "apa",
+              "description": "Citation style to output.",
+              "type": "string",
+              "enum": [
+                "apa",
+                "mla",
+                "chicago",
+                "harvard"
+              ]
+            }
+          },
+          "required": [
+            "reference"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "plan_schedule",
+        "title": "Plan a weekly schedule",
+        "description": "Generate an optimized weekly plan with priority matrix and time blocking from a list of goals.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "goals": {
+              "type": "string",
+              "minLength": 3,
+              "description": "The goals or tasks to schedule, one per line."
+            },
+            "deadline": {
+              "default": "",
+              "description": "Optional deadline, e.g. '2026-08-15'.",
+              "type": "string"
+            },
+            "hoursPerDay": {
+              "default": 6,
+              "description": "Working hours available per day.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 16
+            },
+            "priority": {
+              "default": "medium",
+              "description": "Overall priority.",
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            }
+          },
+          "required": [
+            "goals"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_notifications",
+        "title": "List my notifications",
+        "description": "List the signed-in user's SynergyMind AI notifications, newest first.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "unreadOnly": {
+              "default": false,
+              "description": "Only return unread notifications.",
+              "type": "boolean"
+            },
+            "limit": {
+              "default": 20,
+              "description": "Maximum notifications to return.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

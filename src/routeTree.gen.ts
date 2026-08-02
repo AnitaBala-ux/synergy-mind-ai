@@ -23,6 +23,7 @@ import { Route as ChatIndexRouteImport } from './routes/chat.index'
 import { Route as GuidesCitingAiRouteImport } from './routes/guides.citing-ai'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 
 const TodoRoute = TodoRouteImport.update({
   id: '/todo',
@@ -94,6 +95,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/guides/citing-ai': typeof GuidesCitingAiRoute
   '/chat/': typeof ChatIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/guides/citing-ai': typeof GuidesCitingAiRoute
   '/chat': typeof ChatIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/guides/citing-ai': typeof GuidesCitingAiRoute
   '/chat/': typeof ChatIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/chat/$threadId'
     | '/guides/citing-ai'
     | '/chat/'
+    | '/.lovable/oauth/consent'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/chat/$threadId'
     | '/guides/citing-ai'
     | '/chat'
+    | '/.lovable/oauth/consent'
   id:
     | '__root__'
     | '/'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/chat/$threadId'
     | '/guides/citing-ai'
     | '/chat/'
+    | '/.lovable/oauth/consent'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   ChatThreadIdRoute: typeof ChatThreadIdRoute
   GuidesCitingAiRoute: typeof GuidesCitingAiRoute
   ChatIndexRoute: typeof ChatIndexRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatThreadIdRoute: ChatThreadIdRoute,
   GuidesCitingAiRoute: GuidesCitingAiRoute,
   ChatIndexRoute: ChatIndexRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
