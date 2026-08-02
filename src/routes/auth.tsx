@@ -9,6 +9,9 @@ import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
+  validateSearch: (s: Record<string, unknown>) => ({
+    next: typeof s.next === "string" ? s.next : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign in — SynergyMind AI" },
@@ -19,18 +22,33 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
+/** Only allow same-origin relative paths as a post-login redirect target. */
+function safeNext(next?: string) {
+  if (!next) return undefined;
+  if (!next.startsWith("/") || next.startsWith("//")) return undefined;
+  return next;
+}
+
 function AuthPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
+  const target = safeNext(next);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
+  const goNext = () => {
+    if (target) window.location.href = target;
+    else navigate({ to: "/" });
+  };
+
   useEffect(() => {
-    if (user) navigate({ to: "/" });
-  }, [user, navigate]);
+    if (user) goNext();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,14 +58,16 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin },
+          options: {
+            emailRedirectTo: target ? window.location.origin + target : window.location.origin,
+          },
         });
         if (error) throw error;
         toast.success(t("auth.checkEmail"));
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        navigate({ to: "/" });
+        goNext();
       }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Authentication failed");
