@@ -35,7 +35,7 @@ export const Route = createFileRoute("/api/chat")({
 
         const gateway = createLovableAiGatewayProvider(key);
         const result = streamText({
-          model: gateway("google/gemini-3-flash-preview"),
+          model: gateway("openai/gpt-5.4"),
           system: SYSTEM_PROMPT,
           messages: await convertToModelMessages(messages as unknown as UIMessage[]),
         });

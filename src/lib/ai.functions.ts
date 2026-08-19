@@ -23,7 +23,7 @@ export const runResearch = createServerFn({ method: "POST" })
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
     const gateway = createLovableAiGatewayProvider(key);
     const { text } = await generateText({
-      model: gateway("google/gemini-3-flash-preview"),
+      model: gateway("openai/gpt-5.4"),
       system: RESEARCH_TEMPLATES[data.template],
       prompt: data.query,
     });
@@ -44,7 +44,7 @@ export const runPlanner = createServerFn({ method: "POST" })
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
     const gateway = createLovableAiGatewayProvider(key);
     const { text } = await generateText({
-      model: gateway("google/gemini-3-flash-preview"),
+      model: gateway("openai/gpt-5.4"),
       system: "You are an expert productivity planner. Create an optimized weekly schedule using priority, urgency, importance, and available working hours. Produce clearly-formatted markdown with: Daily Plan (Mon-Sun), Priority Matrix (Urgent/Important quadrants), Time Blocking Suggestions, and Smart Recommendations.",
       prompt: `Goals:\n${data.goals}\n\nDeadline: ${data.deadline ?? "flexible"}\nHours available per day: ${data.hoursPerDay}\nPriority: ${data.priority}`,
     });
@@ -100,7 +100,7 @@ export const analyzeDocument = createServerFn({ method: "POST" })
         "Lovable-API-Key": key,
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "openai/gpt-5.4",
         messages: [
           { role: "system", content: system },
           { role: "user", content: userContent },
@@ -133,7 +133,7 @@ export const extractCitation = createServerFn({ method: "POST" })
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
     const gateway = createLovableAiGatewayProvider(key);
     const { text } = await generateText({
-      model: gateway("google/gemini-3-flash-preview"),
+      model: gateway("openai/gpt-5.4"),
       system: `You are a citation parser. Given any reference text (URL, DOI, raw citation, abstract, or description), extract structured fields and respond with ONLY valid JSON (no markdown, no commentary) matching this TypeScript type:
 {
   "type": "journal"|"book"|"website"|"report"|"chapter",
