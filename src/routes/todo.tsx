@@ -10,9 +10,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/todo")({
   head: () => ({
     meta: [
-      { title: "To-Do List — ResearchFlow AI" },
+      { title: "To-Do List — Synergy Mind AI" },
       { name: "description", content: "Smart to-do list with priorities, categories, deadlines, and a built-in focus timer." },
-      { property: "og:title", content: "Smart To-Do List — ResearchFlow AI" },
+      { property: "og:title", content: "Smart To-Do List — Synergy Mind AI" },
       { property: "og:description", content: "Prioritized tasks, deadlines, and a built-in Pomodoro focus timer." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/todo" },
     ],

@@ -13,9 +13,9 @@ import { exportMarkdownToPDF } from "@/lib/pdf-export";
 export const Route = createFileRoute("/planner")({
   head: () => ({
     meta: [
-      { title: "Task Planner — ResearchFlow AI" },
+      { title: "Task Planner — Synergy Mind AI" },
       { name: "description", content: "Turn goals and deadlines into an AI-optimized weekly schedule. Balance research, deep work, and tasks across your week with smart priorities." },
-      { property: "og:title", content: "AI Task Planner — ResearchFlow AI" },
+      { property: "og:title", content: "AI Task Planner — Synergy Mind AI" },
       { property: "og:description", content: "Generate an AI-optimized weekly schedule from your goals and deadlines." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/planner" },
     ],

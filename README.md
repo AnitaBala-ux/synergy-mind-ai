@@ -1,8 +1,8 @@
-# ResearchFlow AI
+# Synergy Mind AI
 
 **Research smarter. Plan better. Achieve more.**
 
-ResearchFlow AI is a unified AI workspace for academic research, intelligent task planning, smart to-dos, and productivity analytics. It combines an AI research assistant, document analysis, automatic citations, weekly planner, and task/project management into one modern dashboard.
+Synergy Mind AI is a unified AI workspace for academic research, intelligent task planning, smart to-dos, and productivity analytics. It combines an AI research assistant, document analysis, automatic citations, weekly planner, and task/project management into one modern dashboard.
 
 ## Live App
 

@@ -54,7 +54,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "SynergyMind AI — Smart AI Research & Planning" },
       { name: "description", content: "AI-powered productive workspace for research, planning, tasks, and more." },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "ResearchFlow AI" },
+      { property: "og:site_name", content: "Synergy Mind AI" },
       { property: "og:title", content: "SynergyMind AI — Smart AI Research & Planning" },
       { name: "twitter:title", content: "SynergyMind AI — Smart AI Research & Planning" },
       { property: "og:description", content: "AI-powered productive workspace for research, planning, tasks, and more." },
@@ -78,13 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@graph": [
             {
               "@type": "Organization",
-              name: "ResearchFlow AI",
+              name: "Synergy Mind AI",
               url: "https://synergy-mind-ai.lovable.app",
               description: "AI-powered workspace for research, planning, tasks, and knowledge work.",
             },
             {
               "@type": "WebSite",
-              name: "ResearchFlow AI",
+              name: "Synergy Mind AI",
               url: "https://synergy-mind-ai.lovable.app",
             },
           ],

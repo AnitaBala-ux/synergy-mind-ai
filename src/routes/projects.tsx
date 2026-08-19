@@ -8,10 +8,10 @@ import { FolderKanban, Plus, Trash2 } from "lucide-react";
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Projects — ResearchFlow AI" },
+      { title: "Projects — Synergy Mind AI" },
       { name: "description", content: "Organize your research and work into color-coded projects, keep deliverables grouped, and track progress across your AI-assisted workflow." },
-      { property: "og:title", content: "Projects — ResearchFlow AI" },
-      { property: "og:description", content: "Organize research and work into color-coded projects in your ResearchFlow AI workspace." },
+      { property: "og:title", content: "Projects — Synergy Mind AI" },
+      { property: "og:description", content: "Organize research and work into color-coded projects in your Synergy Mind AI workspace." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/projects" },
     ],
     links: [{ rel: "canonical", href: "https://synergy-mind-ai.lovable.app/projects" }],
