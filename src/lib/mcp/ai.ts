@@ -17,7 +17,7 @@ function lovableApiKey(): string {
 export async function runAi(system: string, prompt: string): Promise<string> {
   const gateway = createLovableAiGatewayProvider(lovableApiKey());
   const { text } = await generateText({
-    model: gateway("google/gemini-3-flash-preview"),
+    model: gateway("openai/gpt-5.4"),
     system,
     prompt,
   });
