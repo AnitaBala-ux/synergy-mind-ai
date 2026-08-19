@@ -13,9 +13,9 @@ import { Flame, Clock, Sparkles, TrendingUp } from "lucide-react";
 export const Route = createFileRoute("/analytics")({
   head: () => ({
     meta: [
-      { title: "Analytics — ResearchFlow AI" },
+      { title: "Analytics — Synergy Mind AI" },
       { name: "description", content: "Track your productivity score, focus time, active-day streaks, and weekly trends across tasks and research sessions." },
-      { property: "og:title", content: "Productivity Analytics — ResearchFlow AI" },
+      { property: "og:title", content: "Productivity Analytics — Synergy Mind AI" },
       { property: "og:description", content: "Productivity score, focus time, streaks, and weekly trends." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/analytics" },
     ],

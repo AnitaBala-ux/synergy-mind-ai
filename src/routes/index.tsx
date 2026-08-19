@@ -16,9 +16,9 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ResearchFlow AI — Smart AI Research & Planning" },
+      { title: "Synergy Mind AI — Smart AI Research & Planning" },
       { name: "description", content: "Your unified AI workspace for academic research, planning, smart to-dos, and productivity analytics — all in one dashboard." },
-      { property: "og:title", content: "ResearchFlow AI — Research Smarter. Plan Better. Achieve More." },
+      { property: "og:title", content: "Synergy Mind AI — Research Smarter. Plan Better. Achieve More." },
       { property: "og:description", content: "AI research, planning, and productivity in one unified workspace." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/" },
     ],
@@ -70,7 +70,7 @@ function Dashboard() {
   ];
 
   const quick = [
-    { to: "/chat", title: "AI Assistant", desc: "Chat with ResearchFlow AI for any question.", icon: Bot },
+    { to: "/chat", title: "AI Assistant", desc: "Chat with Synergy Mind AI for any question.", icon: Bot },
     { to: "/research", title: "Run Research", desc: "Summarize articles, generate literature reviews.", icon: BookOpen },
     { to: "/planner", title: "Plan My Week", desc: "Turn goals into an optimized schedule.", icon: CalendarClock },
     { to: "/todo", title: "Manage Tasks", desc: "Smart to-do list with priorities & deadlines.", icon: CheckSquare },

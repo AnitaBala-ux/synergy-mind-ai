@@ -21,9 +21,9 @@ import {
 export const Route = createFileRoute("/research")({
   head: () => ({
     meta: [
-      { title: "Research Assistant — ResearchFlow AI" },
+      { title: "Research Assistant — Synergy Mind AI" },
       { name: "description", content: "Conduct academic and workplace research with AI. Upload PDFs, generate citations, and export branded reports." },
-      { property: "og:title", content: "AI Research Assistant — ResearchFlow AI" },
+      { property: "og:title", content: "AI Research Assistant — Synergy Mind AI" },
       { property: "og:description", content: "Upload PDFs, generate summaries, and build citations with AI." },
       { property: "og:url", content: "https://synergy-mind-ai.lovable.app/research" },
     ],

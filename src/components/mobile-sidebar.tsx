@@ -81,7 +81,7 @@ export function MobileSidebar() {
             <Sparkles className="size-5 text-primary-foreground" />
           </div>
           <div>
-            <div className="font-semibold text-sm leading-tight">SynergyMind AI</div>
+            <div className="font-semibold text-sm leading-tight">Synergy Mind AI</div>
             <div className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">
               {t("common.workspace")}
             </div>

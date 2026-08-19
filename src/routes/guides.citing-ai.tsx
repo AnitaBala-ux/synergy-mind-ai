@@ -69,7 +69,7 @@ function CitingAIGuide() {
               <li>A link to the saved conversation if the tool provides one.</li>
             </ul>
             <p className="text-sm text-muted-foreground">
-              Tip: Save prompts and responses in the ResearchFlow AI <Link to="/research" className="text-primary underline">Research Assistant</Link> so they stay attached to your project.
+              Tip: Save prompts and responses in the Synergy Mind AI <Link to="/research" className="text-primary underline">Research Assistant</Link> so they stay attached to your project.
             </p>
           </section>
 
@@ -129,7 +129,7 @@ function CitingAIGuide() {
           <section className="rounded-xl border border-border bg-gradient-to-br from-primary/10 to-accent/10 p-6">
             <h2 className="text-xl font-semibold">Generate citations automatically</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              ResearchFlow AI's Research Assistant can extract and format references in APA 7 and Harvard style — including AI-generated sources.
+              Synergy Mind AI's Research Assistant can extract and format references in APA 7 and Harvard style — including AI-generated sources.
             </p>
             <Link to="/research" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
               Open Research Assistant <ArrowRight className="size-4" />
